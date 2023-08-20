@@ -1,18 +1,17 @@
 'use client'
 import {
-  Box, CubeCamera, Environment, MeshReflectorMaterial, OrbitControls, PerspectiveCamera, useGLTF
+  CubeCamera, Environment, MeshReflectorMaterial, OrbitControls, PerspectiveCamera, useGLTF
 } from '@react-three/drei'
 import { Canvas, useFrame, useLoader } from '@react-three/fiber'
 import { Suspense, useEffect, useRef } from 'react'
 import {
   Color,
-  DoubleSide, LinearSRGBColorSpace, RepeatWrapping, SRGBColorSpace, TextureLoader, TorusGeometry, Vector2
+  RepeatWrapping, TextureLoader, Vector2
 } from 'three'
 import { Mesh } from 'three'
 import { GLTF } from 'three-stdlib/loaders/GLTFLoader'
 import {
   EffectComposer,
-  DepthOfField,
   Bloom,
   ChromaticAberration,
 } from "@react-three/postprocessing";
@@ -25,7 +24,6 @@ const CAR_SPEED = 2;
 const Effect = () => {
   return (
     <EffectComposer>
-      {/* <DepthOfField focusDistance={0.0035} focalLength={0.01} bokehScale={3} height={480} /> */}
       <Bloom
         blendFunction={BlendFunction.ADD}
         intensity={1.3} // The bloom intensity.
@@ -37,7 +35,9 @@ const Effect = () => {
       />
       <ChromaticAberration
         blendFunction={BlendFunction.NORMAL} // blend mode
-        offset={[0.0005, 0.0012]} // color offset
+        offset={new Vector2(0.0005, 0.0012)} // color offset
+        radialModulation={false}
+        modulationOffset={1.5}
       />
     </EffectComposer>
   )
